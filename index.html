@@ -9,6 +9,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px){
+
+  body{
+    perspective:800px;
+  }
+
+  .card{
+    max-width:90%;
+    padding:40px 25px;
+    border-radius:22px;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+  p{
+    font-size:14px;
+    min-height:100px;
+  }
+
+  button{
+    padding:10px 24px;
+    font-size:13px;
+  }
+
+  .signature{
+    font-size:20px;
+  }
+
+  .character{
+    width:80px;
+    height:80px;
+    bottom:30px;
+  }
+
+  .body{
+    font-size:55px;
+  }
+
+  .gun{
+    font-size:22px;
+    top:28px;
+  }
+
+  .left{
+    left:10px;
+  }
+
+  .right{
+    right:10px;
+  }
+
+  .spark{
+    width:10px;
+    height:10px;
+  }
+
+}
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
@@ -400,6 +460,7 @@ function explode(x,y){
   document.body.appendChild(explosion);
   setTimeout(()=>explosion.remove(),1700);
 }
+
 
 </script>
 </body>
