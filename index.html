@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Gửi em 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -50,7 +50,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  height:100vh;
+  min-height:100svh;
+  height:100dvh;
+  width:100%;
   overflow:hidden;
   display:flex;
   justify-content:center;
@@ -107,13 +109,39 @@ body{
   to{opacity:1}
 }
 
+/* ===== FLASH EFFECT ===== */
+
+.flash{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,0.9) 20%,
+      rgba(255,255,255,0.6) 40%,
+      rgba(255,255,255,0.2) 70%,
+      transparent 100%);
+  z-index:2000;
+  pointer-events:none;
+  animation:flashBang 0.9s ease-out forwards;
+}
+
+@keyframes flashBang{
+  0%{ opacity:0; }
+  10%{ opacity:1; }
+  40%{ opacity:0.9; }
+  100%{ opacity:0; }
+}
+
 /* ===== DEEP GALAXY ===== */
 
 .space{
-  position:absolute;
+  position:fixed;
   inset:0;
+  width:100%;
+  height:100%;
   transform-style:preserve-3d;
   transition:transform .15s linear;
+  will-change:transform;
 }
 
 .galaxy{
@@ -122,11 +150,12 @@ body{
   height:1600px;
   top:50%;
   left:50%;
-  transform:translate(-50%,-50%);
+  transform:translate3d(-50%,-50%,0);
   border-radius:50%;
   filter:blur(60px);
   opacity:.7;
   animation:rotateGalaxy 220s linear infinite;
+  will-change:transform;
 }
 
 .layer1{
@@ -148,8 +177,8 @@ body{
 }
 
 @keyframes rotateGalaxy{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
+  from{transform:translate3d(-50%,-50%,0) rotate(0deg)}
+  to{transform:translate3d(-50%,-50%,0) rotate(360deg)}
 }
 
 /* ===== STARS ===== */
@@ -178,6 +207,7 @@ body{
   transform: translateZ(0);
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
   padding:60px 50px;
   border-radius:30px;
   max-width:560px;
@@ -311,7 +341,7 @@ button{
   }
 }
 
-/* ===== HUGE FIREWORK ===== */
+/* ===== FIREWORK ===== */
 
 .explosion{
   position:absolute;
@@ -342,7 +372,6 @@ button{
 
 <body>
 
-<!-- INTRO -->
 <div id="intro">
   <div class="intro-content">
     <h2 class="intro-title">A small galaxy for you ✨</h2>
@@ -369,14 +398,18 @@ button{
   <h1>Happy Women’s Day 💕</h1>
   <p id="text">Anh có một điều muốn nói…</p>
   <button onclick="openMessage()">Chạm khẽ tay em vào đây đi 💌</button>
-  <div class="signature">8/3 tràn ngập hạnh phúc nhé, bé Quỳnh 💖</div>
+  <div class="signature">8/3 tràn ngập hạnh phúc nhé, bé .... 💖</div>
 </div>
 
 <script>
 
-/* INTRO CONTROL */
+/* INTRO + FLASH */
 document.getElementById("intro").addEventListener("click",function(){
-  this.classList.add("hide");
+  const flash=document.createElement("div");
+  flash.className="flash";
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),900);
+  setTimeout(()=>{ this.classList.add("hide"); },200);
 });
 
 /* PARALLAX */
@@ -387,13 +420,13 @@ document.addEventListener("mousemove",(e)=>{
     `rotateY(${x}deg) rotateX(${-y}deg)`;
 });
 
-/* STARS */
+/* STARS (FIX iOS) */
 function createStars(count,type){
   for(let i=0;i<count;i++){
     const s=document.createElement("div");
     s.className="star "+type;
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=Math.random()*100+"vh";
+    s.style.left=Math.random()*window.innerWidth+"px";
+    s.style.top=Math.random()*window.innerHeight+"px";
     document.body.appendChild(s);
   }
 }
@@ -424,7 +457,7 @@ function openMessage(){
   type();
 }
 
-/* HEART SHOOT */
+/* HEART + FIREWORK GIỮ NGUYÊN */
 function shootHearts(){
   const colors=["#ff5fa2","#ff8fcf","#ffd1e8"];
   const card=document.getElementById("card");
@@ -471,7 +504,6 @@ function shootHearts(){
   }
 }
 
-/* SUPER HUGE FIREWORK */
 function superFireworks(){
   setInterval(()=>{
     const x=Math.random()*window.innerWidth;
