@@ -115,16 +115,22 @@ from{opacity:.2}
 to{opacity:1}
 }
 
-/* CARD */
+/* BOOK */
 
 .book{
 position:absolute;
 top:50%;
 left:50%;
-transform:translate(-50%,-50%);
+transform:translate(-50%,-50%) scale(1);
 width:360px;
 height:520px;
 perspective:2000px;
+transition:transform .8s, filter .8s;
+}
+
+.book.active{
+transform:translate(-50%,-50%) scale(1.12);
+filter:brightness(1.2) drop-shadow(0 0 25px rgba(255,150,200,.8));
 }
 
 /* PAGE */
@@ -143,7 +149,7 @@ linear-gradient(180deg,#05060f,#0b0820,#04020a);
 
 border-radius:25px;
 
-padding:55px;
+padding:70px 55px;
 
 text-align:center;
 
@@ -228,7 +234,7 @@ line-height:1.9;
 
 letter-spacing:.6px;
 
-margin-top:40px;
+margin-top:20px;
 
 min-height:160px;
 
@@ -243,12 +249,21 @@ text-shadow:
 /* SIGNATURE */
 
 #signature{
-margin-top:30px;
+
+margin-top:40px;
+
 font-family:'Great Vibes',cursive;
-font-size:32px;
+
+font-size:34px;
+
 color:#ff9ac2;
+
 opacity:0;
+
 transition:opacity 2s;
+
+text-align:center;
+
 }
 
 /* HEART */
@@ -348,6 +363,8 @@ const cover=document.getElementById("cover")
 cover.onclick=()=>{
 
 cover.style.transform="rotateY(-170deg)"
+
+document.querySelector(".book").classList.add("active")
 
 startTyping()
 
